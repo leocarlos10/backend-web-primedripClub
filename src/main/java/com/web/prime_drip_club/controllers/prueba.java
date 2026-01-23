@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @RestController
 @RequestMapping("/prueba")
 public class prueba {
@@ -13,6 +12,5 @@ public class prueba {
     public String getMethodName() {
         return "Hola Mundo desde el controlador prueba";
     }
-    
-    
+
 }
