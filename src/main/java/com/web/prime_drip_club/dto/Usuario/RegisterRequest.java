@@ -19,4 +19,6 @@ public class RegisterRequest {
     String email;
     @NotBlank
     String password;
+    @NotBlank
+    Boolean activo;
 }

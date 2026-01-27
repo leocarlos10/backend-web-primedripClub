@@ -24,8 +24,19 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    public Usuario mapRowUsuario(ResultSet rs) throws SQLException {
+        return Usuario.builder()
+                .id(rs.getLong("id"))
+                .nombre(rs.getString("nombre"))
+                .email(rs.getString("email"))
+                .password(rs.getString("password"))
+                .activo(rs.getBoolean("activo"))
+                .fechaCreacion(rs.getTimestamp("fecha_creacion").toLocalDateTime())
+                .build();
+    }
+
     public Optional<Usuario> findByEmail(String email) {
-        String sql = "SELECT * FROM usuarios WHERE email = ?";
+        String sql = "SELECT * FROM usuario WHERE email = ?";
         try {
             Usuario user = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> mapRowUsuario(rs), email);
             return Optional.ofNullable(user);
@@ -35,13 +46,13 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     public Boolean existsByEmail(String email) {
-        String sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM usuario WHERE email = ?";
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
         return count != null && count > 0;
     }
 
     public Long save(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, email, password, activo, fecha_creacion) VALUES (?, ?, ?, ?, NOW())";
+        String sql = "INSERT INTO usuario (nombre, email, password, activo, fecha_creacion) VALUES (?, ?, ?, ?, NOW())";
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             
@@ -71,7 +82,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     public Optional<Usuario> findById(Long id) {
-        String sql = "SELECT * FROM usuarios WHERE id = ?";
+        String sql = "SELECT * FROM usuario WHERE id = ?";
         try {
             Usuario user = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> mapRowUsuario(rs), id);
             return Optional.ofNullable(user);
@@ -80,14 +91,5 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         }
     }
 
-    public Usuario mapRowUsuario(ResultSet rs) throws SQLException {
-        Usuario usuario = new Usuario();
-        usuario.setId(rs.getLong("id"));
-        usuario.setNombre(rs.getString("nombre"));
-        usuario.setEmail(rs.getString("email"));
-        usuario.setPassword(rs.getString("password"));
-        usuario.setActivo(rs.getBoolean("activo"));
-        usuario.setFechaCreacion(rs.getTimestamp("fecha_creacion").toLocalDateTime());
-        return usuario;
-    }
+   
 }

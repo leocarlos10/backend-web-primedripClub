@@ -8,6 +8,7 @@ import com.web.prime_drip_club.dto.Usuario.RegisterRequest;
 import com.web.prime_drip_club.dto.Usuario.RegisterResponse;
 import com.web.prime_drip_club.service.UsuarioService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,13 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest entity) {
-        return ResponseEntity.ok(entity);
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(usuarioService.login(request));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest entity) {
-        RegisterResponse response = usuarioService.register(entity);
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+        RegisterResponse response = usuarioService.register(request);
         return ResponseEntity.ok(response);
     }
     
