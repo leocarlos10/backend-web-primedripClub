@@ -2,6 +2,7 @@ package com.web.prime_drip_club.dto.Usuario;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,6 @@ public class RegisterRequest {
     String email;
     @NotBlank
     String password;
-    @NotBlank
+    @NotNull
     Boolean activo;
 }
