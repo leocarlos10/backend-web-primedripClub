@@ -19,7 +19,7 @@ public class LoginRequest {
     @Email(message = "El email debe tener un formato válido")
     String email;
     @NotBlank
-    @Size(min = 6, max = 100)
+    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     String password;
     
 }

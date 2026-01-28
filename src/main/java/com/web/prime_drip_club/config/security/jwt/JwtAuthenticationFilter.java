@@ -28,6 +28,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        // Permitir solicitudes OPTIONS (preflight CORS) sin autenticación
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Permitir rutas públicas sin procesar JWT
+        String path = request.getRequestURI();
+        if (path.startsWith("/v1/auth/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String token = getTokenFromRequest(request);
         final String email;
 

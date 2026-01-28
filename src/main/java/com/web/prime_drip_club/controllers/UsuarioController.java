@@ -41,12 +41,11 @@ public class UsuarioController {
      *   "success": true,
      *   "message": "Login exitoso",
      *   "data": {
-     *     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-     *     "usuario": {
-     *       "id": 1,
-     *       "nombre": "Juan Pérez",
-     *       "email": "juan.perez@example.com",
-     *       "roles": ["ROLE_USER"]
+     *      "nombre": "Juan Pérez",
+     *      "email": "juan.perez@example.com",
+     *      "roles": ["ROLE_USER"]
+     *      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+     *       "tokenType" : "Bearer
      *     }
      *   }
      * }
