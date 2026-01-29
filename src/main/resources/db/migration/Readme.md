@@ -387,6 +387,23 @@ CREATE INDEX idx_users_username ON users(username);
   run: ./mvnw test
 ```
 
+# Configuracion de admin para la aplicacion (Local)
+
+    crea un archivo que puede ser llamado V5_create_admin.sql
+    luego inserta el codigo sql para insertar un admin al momento de 
+    ejecutar la aplicacion
+```sql
+    -- Insertar usuario admin (password:password1 - debes usar BCrypt en producción)
+INSERT INTO usuario (nombre, email, password, activo, fecha_creacion) 
+VALUES ('Admin', 'admin@gmail.com', 'password hasheado con BCrypt', TRUE, NOW());
+
+-- Asignar rol ADMIN al usuario
+INSERT INTO usuario_rol (usuario_id, rol_id) 
+SELECT u.id, r.id 
+FROM usuario u, rol r 
+WHERE u.email = 'email del admin creado' AND r.nombre = 'ADMIN';
+```
+
 ## Referencias y recursos
 
 - **Documentación oficial**: https://flywaydb.org/documentation/

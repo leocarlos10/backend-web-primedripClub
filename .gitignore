@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+## creacion de admin ##
+/src/main/resources/db/migration/V5__create_admin.sql
