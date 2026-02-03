@@ -1,10 +1,13 @@
 package com.web.prime_drip_club.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
@@ -18,7 +21,10 @@ import java.util.Arrays;
  * </p>
  */
 @Configuration
-public class CorsConfig {
+public class CorsConfig implements WebMvcConfigurer {
+
+        @Value("${file.upload-dir:uploads/images}")
+        private String uploadDir;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -66,5 +72,11 @@ public class CorsConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    @Override
+     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/images/**")
+                .addResourceLocations("file:" + uploadDir + "/");
     }
 }

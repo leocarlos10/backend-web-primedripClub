@@ -32,6 +32,14 @@ public class WebSecurityConfig {
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                                 .authorizeHttpRequests(req -> req
                                                 .requestMatchers("/v1/auth/**").permitAll()
+                                                .requestMatchers("/uploads/**").permitAll() // Permitir acceso público a
+                                                                                            // imágenes
+                                                .requestMatchers("/v1/categorias").permitAll() // Listar categorías
+                                                .requestMatchers("/v1/categorias/*").permitAll() // Ver categoría por ID
+                                                .requestMatchers("/v1/productos").permitAll() // Listar productos
+                                                .requestMatchers("/v1/productos/activos").permitAll() // Productos
+                                                                                                      // activos
+                                                .requestMatchers("/v1/productos/*").permitAll() // Ver producto por ID
                                                 .anyRequest().authenticated())
                                 .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

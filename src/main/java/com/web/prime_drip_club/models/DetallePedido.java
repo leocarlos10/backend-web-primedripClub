@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class DetallePedido {
-    private Integer id;
-    private Integer pedidoId;
-    private Integer productoId;
+    private Long id;
+    private Long pedidoId;
+    private Long productoId;
     private Integer cantidad;
     private BigDecimal precioUnitario;
 }

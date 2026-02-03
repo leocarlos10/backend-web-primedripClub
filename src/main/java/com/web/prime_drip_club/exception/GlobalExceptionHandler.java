@@ -97,6 +97,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+                    ResourceNotFoundException ex,
+                    WebRequest request) {
+
+            ErrorResponse errorResponse = ErrorResponse.builder()
+                            .timestamp(LocalDateTime.now())
+                            .status(HttpStatus.NOT_FOUND.value())
+                            .error("Recurso No Encontrado")
+                            .message(ex.getMessage())
+                            .path(request.getDescription(false).replace("uri=", ""))
+                            .build();
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     /**
      * manejador global para excepciones no controladas
      * @param ex

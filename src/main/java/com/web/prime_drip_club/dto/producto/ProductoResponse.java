@@ -1,4 +1,4 @@
-package com.web.prime_drip_club.models;
+package com.web.prime_drip_club.dto.producto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Producto {
+public class ProductoResponse {
     private Long id;
     private String nombre;
     private String descripcion;
@@ -22,5 +22,6 @@ public class Producto {
     private String imagenUrl;
     private Boolean activo;
     private Long categoriaId;
+    private String categoriaNombre;
     private LocalDateTime fechaCreacion;
 }

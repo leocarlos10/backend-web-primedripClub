@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Pago {
-    private Integer id;
-    private Integer pedidoId;
+    private Long id;
+    private Long pedidoId;
     private String metodo;
     private String estado;
     private String referencia;

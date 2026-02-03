@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Pedido {
-    private Integer id;
-    private Integer usuarioId;
+    private Long id;
+    private Long usuarioId;
     private String emailContacto;
     private String nombreContacto;
     private String telefono;
