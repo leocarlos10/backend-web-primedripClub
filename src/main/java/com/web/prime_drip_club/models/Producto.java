@@ -22,5 +22,7 @@ public class Producto {
     private String imagenUrl;
     private Boolean activo;
     private Long categoriaId;
+    private EtiquetaProducto etiqueta;
+    private Boolean isFeatured;
     private LocalDateTime fechaCreacion;
 }

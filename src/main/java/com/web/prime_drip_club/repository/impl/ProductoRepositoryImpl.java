@@ -1,6 +1,5 @@
 package com.web.prime_drip_club.repository.impl;
 
-
 import com.web.prime_drip_club.exception.DatabaseException;
 import com.web.prime_drip_club.models.Producto;
 import com.web.prime_drip_club.repository.ProductoRepository;
@@ -24,6 +23,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private Producto mapRowToProducto(ResultSet rs) throws SQLException {
+        String etiquetaValor = rs.getString("etiqueta");
         return Producto.builder()
                 .id(rs.getLong("id"))
                 .nombre(rs.getString("nombre"))
@@ -34,6 +34,10 @@ public class ProductoRepositoryImpl implements ProductoRepository {
                 .imagenUrl(rs.getString("imagen_url"))
                 .activo(rs.getBoolean("activo"))
                 .categoriaId(rs.getLong("categoria_id"))
+                .etiqueta(
+                        etiquetaValor != null ? com.web.prime_drip_club.models.EtiquetaProducto.fromValor(etiquetaValor)
+                                : null)
+                .isFeatured(rs.getBoolean("is_featured"))
                 .fechaCreacion(rs.getTimestamp("fecha_creacion").toLocalDateTime())
                 .build();
     }
@@ -82,8 +86,8 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public Long save(Producto producto) {
         String sql = "INSERT INTO producto (nombre, descripcion, precio, stock, marca, " +
-                "imagen_url, activo, categoria_id, fecha_creacion) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+                "imagen_url, activo, categoria_id, etiqueta, is_featured, fecha_creacion) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -97,6 +101,8 @@ public class ProductoRepositoryImpl implements ProductoRepository {
                 ps.setString(6, producto.getImagenUrl());
                 ps.setBoolean(7, producto.getActivo());
                 ps.setLong(8, producto.getCategoriaId());
+                ps.setString(9, producto.getEtiqueta() != null ? producto.getEtiqueta().getValor() : null);
+                ps.setBoolean(10, producto.getIsFeatured() != null ? producto.getIsFeatured() : false);
                 return ps;
             }, keyHolder);
 
@@ -109,8 +115,8 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public Boolean update(Producto producto) {
         String sql = "UPDATE producto SET nombre = ?, descripcion = ?, precio = ?, " +
-                "stock = ?, marca = ?, imagen_url = ?, activo = ?, categoria_id = ? " +
-                "WHERE id = ?";
+                "stock = ?, marca = ?, imagen_url = ?, activo = ?, categoria_id = ?, " +
+                "etiqueta = ?, is_featured = ? WHERE id = ?";
         try {
             int rows = jdbcTemplate.update(sql,
                     producto.getNombre(),
@@ -121,6 +127,8 @@ public class ProductoRepositoryImpl implements ProductoRepository {
                     producto.getImagenUrl(),
                     producto.getActivo(),
                     producto.getCategoriaId(),
+                    producto.getEtiqueta() != null ? producto.getEtiqueta().getValor() : null,
+                    producto.getIsFeatured() != null ? producto.getIsFeatured() : false,
                     producto.getId());
             return rows > 0;
         } catch (Exception e) {

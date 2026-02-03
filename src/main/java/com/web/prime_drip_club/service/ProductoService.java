@@ -47,6 +47,8 @@ public class ProductoService {
                 .imagenUrl(request.getImagenUrl())
                 .activo(request.getActivo())
                 .categoriaId(request.getCategoriaId())
+                .etiqueta(request.getEtiqueta())
+                .isFeatured(request.getIsFeatured() != null ? request.getIsFeatured() : false)
                 .build();
 
         Long id = productoRepository.save(producto);
@@ -80,6 +82,8 @@ public class ProductoService {
                 .imagenUrl(request.getImagenUrl())
                 .activo(request.getActivo())
                 .categoriaId(request.getCategoriaId())
+                .etiqueta(request.getEtiqueta())
+                .isFeatured(request.getIsFeatured() != null ? request.getIsFeatured() : false)
                 .fechaCreacion(productoExistente.getFechaCreacion())
                 .build();
 
@@ -114,6 +118,8 @@ public class ProductoService {
                 .imagenUrl(producto.getImagenUrl())
                 .activo(producto.getActivo())
                 .categoriaId(producto.getCategoriaId())
+                .etiqueta(producto.getEtiqueta())
+                .isFeatured(producto.getIsFeatured())
                 .fechaCreacion(producto.getFechaCreacion())
                 .build();
     }

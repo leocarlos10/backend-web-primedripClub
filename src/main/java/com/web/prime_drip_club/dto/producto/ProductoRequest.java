@@ -1,5 +1,6 @@
 package com.web.prime_drip_club.dto.producto;
 
+import com.web.prime_drip_club.models.EtiquetaProducto;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,4 +43,8 @@ public class ProductoRequest {
 
     @NotNull(message = "La categoría es obligatoria")
     private Long categoriaId;
+
+    private EtiquetaProducto etiqueta;
+
+    private Boolean isFeatured;
 }
