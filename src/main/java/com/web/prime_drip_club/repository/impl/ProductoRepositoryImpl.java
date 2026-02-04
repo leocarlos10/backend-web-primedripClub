@@ -24,6 +24,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 
     private Producto mapRowToProducto(ResultSet rs) throws SQLException {
         String etiquetaValor = rs.getString("etiqueta");
+        String sexoValor = rs.getString("sexo");
         return Producto.builder()
                 .id(rs.getLong("id"))
                 .nombre(rs.getString("nombre"))
@@ -36,6 +37,9 @@ public class ProductoRepositoryImpl implements ProductoRepository {
                 .categoriaId(rs.getLong("categoria_id"))
                 .etiqueta(
                         etiquetaValor != null ? com.web.prime_drip_club.models.EtiquetaProducto.fromValor(etiquetaValor)
+                                : null)
+                .sexo(
+                        sexoValor != null ? com.web.prime_drip_club.models.SexoProducto.fromValor(sexoValor)
                                 : null)
                 .isFeatured(rs.getBoolean("is_featured"))
                 .fechaCreacion(rs.getTimestamp("fecha_creacion").toLocalDateTime())
@@ -86,8 +90,8 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public Long save(Producto producto) {
         String sql = "INSERT INTO producto (nombre, descripcion, precio, stock, marca, " +
-                "imagen_url, activo, categoria_id, etiqueta, is_featured, fecha_creacion) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+                "imagen_url, activo, categoria_id, etiqueta, sexo, is_featured, fecha_creacion) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -102,7 +106,8 @@ public class ProductoRepositoryImpl implements ProductoRepository {
                 ps.setBoolean(7, producto.getActivo());
                 ps.setLong(8, producto.getCategoriaId());
                 ps.setString(9, producto.getEtiqueta() != null ? producto.getEtiqueta().getValor() : null);
-                ps.setBoolean(10, producto.getIsFeatured() != null ? producto.getIsFeatured() : false);
+                ps.setString(10, producto.getSexo() != null ? producto.getSexo().getValor() : null);
+                ps.setBoolean(11, producto.getIsFeatured() != null ? producto.getIsFeatured() : false);
                 return ps;
             }, keyHolder);
 
@@ -116,7 +121,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     public Boolean update(Producto producto) {
         String sql = "UPDATE producto SET nombre = ?, descripcion = ?, precio = ?, " +
                 "stock = ?, marca = ?, imagen_url = ?, activo = ?, categoria_id = ?, " +
-                "etiqueta = ?, is_featured = ? WHERE id = ?";
+                "etiqueta = ?, sexo = ?, is_featured = ? WHERE id = ?";
         try {
             int rows = jdbcTemplate.update(sql,
                     producto.getNombre(),
@@ -128,6 +133,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
                     producto.getActivo(),
                     producto.getCategoriaId(),
                     producto.getEtiqueta() != null ? producto.getEtiqueta().getValor() : null,
+                    producto.getSexo() != null ? producto.getSexo().getValor() : null,
                     producto.getIsFeatured() != null ? producto.getIsFeatured() : false,
                     producto.getId());
             return rows > 0;

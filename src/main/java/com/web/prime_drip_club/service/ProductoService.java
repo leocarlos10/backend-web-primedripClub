@@ -48,6 +48,7 @@ public class ProductoService {
                 .activo(request.getActivo())
                 .categoriaId(request.getCategoriaId())
                 .etiqueta(request.getEtiqueta())
+                .sexo(request.getSexo())
                 .isFeatured(request.getIsFeatured() != null ? request.getIsFeatured() : false)
                 .build();
 
@@ -83,6 +84,7 @@ public class ProductoService {
                 .activo(request.getActivo())
                 .categoriaId(request.getCategoriaId())
                 .etiqueta(request.getEtiqueta())
+                .sexo(request.getSexo())
                 .isFeatured(request.getIsFeatured() != null ? request.getIsFeatured() : false)
                 .fechaCreacion(productoExistente.getFechaCreacion())
                 .build();
@@ -119,6 +121,7 @@ public class ProductoService {
                 .activo(producto.getActivo())
                 .categoriaId(producto.getCategoriaId())
                 .etiqueta(producto.getEtiqueta())
+                .sexo(producto.getSexo())
                 .isFeatured(producto.getIsFeatured())
                 .fechaCreacion(producto.getFechaCreacion())
                 .build();

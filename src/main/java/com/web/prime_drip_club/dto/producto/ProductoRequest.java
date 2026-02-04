@@ -1,6 +1,7 @@
 package com.web.prime_drip_club.dto.producto;
 
 import com.web.prime_drip_club.models.EtiquetaProducto;
+import com.web.prime_drip_club.models.SexoProducto;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,6 +46,8 @@ public class ProductoRequest {
     private Long categoriaId;
 
     private EtiquetaProducto etiqueta;
+
+    private SexoProducto sexo;
 
     private Boolean isFeatured;
 }

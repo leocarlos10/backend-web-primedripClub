@@ -23,6 +23,7 @@ public class Producto {
     private Boolean activo;
     private Long categoriaId;
     private EtiquetaProducto etiqueta;
+    private SexoProducto sexo;
     private Boolean isFeatured;
     private LocalDateTime fechaCreacion;
 }

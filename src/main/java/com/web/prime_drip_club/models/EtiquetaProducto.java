@@ -1,5 +1,8 @@
 package com.web.prime_drip_club.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum EtiquetaProducto {
     AGOTADO("Agotado"),
     NUEVO("Nuevo"),
@@ -17,6 +20,7 @@ public enum EtiquetaProducto {
      * obtiene el valor de la etiqueta
      * @return valor de la etiqueta
      */
+    @JsonValue
     public String getValor() {
         return valor;
     }
@@ -26,6 +30,7 @@ public enum EtiquetaProducto {
      * @param valor
      * @return etiqueta, null si no existe, IllegalArgumentException si el valor no es válido
      */
+    @JsonCreator
     public static EtiquetaProducto fromValor(String valor) {
         if (valor == null) {
             return null;

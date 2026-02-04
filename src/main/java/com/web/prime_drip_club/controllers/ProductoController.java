@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ProductoController {
     private final ProductoService productoService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response<List<ProductoResponse>>> obtenerTodos() {
         List<ProductoResponse> productos = productoService.obtenerTodos();
         Response<List<ProductoResponse>> response = Response.<List<ProductoResponse>>builder()
@@ -82,14 +84,15 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<Void>> eliminar(@PathVariable Long id) {
-        productoService.eliminar(id);
-        Response<Void> response = Response.<Void>builder()
-                .responseCode(204)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Response<Boolean>> eliminar(@PathVariable Long id) {
+        Boolean estado = productoService.eliminar(id);
+        Response<Boolean> response = Response.<Boolean>builder()
+                .responseCode(200)
                 .success(true)
                 .message("Producto eliminado exitosamente")
-                .data(null)
+                .data(estado)
                 .build();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

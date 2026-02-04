@@ -1,6 +1,7 @@
 package com.web.prime_drip_club.dto.producto;
 
 import com.web.prime_drip_club.models.EtiquetaProducto;
+import com.web.prime_drip_club.models.SexoProducto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class ProductoResponse {
     private Long categoriaId;
     private String categoriaNombre;
     private EtiquetaProducto etiqueta;
+    private SexoProducto sexo;
     private Boolean isFeatured;
     private LocalDateTime fechaCreacion;
 }
