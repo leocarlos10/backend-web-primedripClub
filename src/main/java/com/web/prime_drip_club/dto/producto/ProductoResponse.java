@@ -24,7 +24,6 @@ public class ProductoResponse {
     private String imagenUrl;
     private Boolean activo;
     private Long categoriaId;
-    private String categoriaNombre;
     private EtiquetaProducto etiqueta;
     private SexoProducto sexo;
     private Boolean isFeatured;

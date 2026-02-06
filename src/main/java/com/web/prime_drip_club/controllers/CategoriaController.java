@@ -97,11 +97,11 @@ public class CategoriaController {
     public ResponseEntity<Response<Void>> eliminar(@PathVariable Long id) {
         categoriaService.eliminar(id);
         Response<Void> response = Response.<Void>builder()
-                .responseCode(204)
+                .responseCode(200)
                 .success(true)
                 .message("Categoría eliminada exitosamente")
                 .data(null)
                 .build();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
