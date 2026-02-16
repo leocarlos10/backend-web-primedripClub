@@ -74,8 +74,11 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
                 ps.setString(2, categoria.getDescripcion());
                 return ps;
             }, keyHolder);
-
-            return keyHolder.getKey().longValue();
+            Number key = keyHolder.getKey();
+            if (key == null) {
+                throw new DatabaseException("Error al guardar categoría: No se generó un ID");
+            }
+            return key.longValue();
         } catch (Exception e) {
             throw new DatabaseException("Error al guardar categoría: " + e.getMessage(), e);
         }

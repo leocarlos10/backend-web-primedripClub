@@ -18,18 +18,21 @@ public class ProductoService {
     private final ProductoRepository productoRepository;
     private final FileStorageService fileStorageService;
 
+    @Transactional(readOnly = true)
     public List<ProductoResponse> obtenerTodos() {
         return productoRepository.findAll().stream()
                 .map(this::convertirAResponse)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<ProductoResponse> obtenerActivos() {
         return productoRepository.findByActivo(true).stream()
                 .map(this::convertirAResponse)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public ProductoResponse obtenerPorId(Long id) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con ID: " + id));

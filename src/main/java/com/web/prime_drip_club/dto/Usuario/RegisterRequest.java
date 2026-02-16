@@ -19,6 +19,8 @@ public class RegisterRequest {
     @NotBlank
     @Email(message = "El email debe tener un formato válido")
     String email;
+    @Size(max = 20, message = "El teléfono no puede superar 20 caracteres")
+    String telefono;
     @NotBlank
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     String password;

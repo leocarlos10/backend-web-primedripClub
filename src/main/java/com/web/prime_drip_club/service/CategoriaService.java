@@ -65,7 +65,7 @@ public class CategoriaService {
     @Transactional
     public CategoriaResponse actualizar(Long id, CategoriaRequest request) {
         // Verificar que la categoría existe
-        Categoria categoriaExistente = categoriaRepository.findById(id)
+             categoriaRepository.findById(id)
                 .orElseThrow(() -> new ValidationException("Categoría no encontrada con ID: " + id));
 
         // Validar que no exista otra categoría con el mismo nombre
@@ -89,12 +89,8 @@ public class CategoriaService {
     @Transactional
     public void eliminar(Long id) {
         // Verificar que la categoría existe
-        Categoria categoria = categoriaRepository.findById(id)
+         categoriaRepository.findById(id)
                 .orElseThrow(() -> new ValidationException("Categoría no encontrada con ID: " + id));
-
-        // Aquí podrías añadir validación adicional:
-        // - Verificar que no haya productos asociados a esta categoría
-        // - O cambiar los productos a una categoría "Sin categoría"
 
         boolean eliminada = categoriaRepository.delete(id);
 

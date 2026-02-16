@@ -5,19 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Pago {
+public class DetalleCarrito {
     private Long id;
-    private Long pedidoId;
-    private MetodoPago metodo;
-    private EstadoPago estado;
-    private String referencia;
-    private String mensajeError;
-    private String metadata;
-    private LocalDateTime fechaPago;
+    private Long carritoId;
+    private Long productoId;
+    private Integer cantidad;
+    private BigDecimal precioUnitario;
+    private LocalDateTime fechaAgregado;
 }

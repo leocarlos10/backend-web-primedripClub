@@ -29,6 +29,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .id(rs.getLong("id"))
                 .nombre(rs.getString("nombre"))
                 .email(rs.getString("email"))
+                .telefono(rs.getString("telefono"))
                 .password(rs.getString("password"))
                 .activo(rs.getBoolean("activo"))
                 .fechaCreacion(rs.getTimestamp("fecha_creacion").toLocalDateTime())
@@ -52,20 +53,24 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     public Long save(Usuario usuario) {
-        String sql = "INSERT INTO usuario (nombre, email, password, activo, fecha_creacion) VALUES (?, ?, ?, ?, NOW())";
+        String sql = "INSERT INTO usuario (nombre, email, telefono, password, activo, fecha_creacion) VALUES (?, ?, ?, ?, ?, NOW())";
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
-            
+
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, usuario.getNombre());
                 ps.setString(2, usuario.getEmail());
-                ps.setString(3, usuario.getPassword());
-                ps.setBoolean(4, usuario.getActivo());
+                ps.setString(3, usuario.getTelefono());
+                ps.setString(4, usuario.getPassword());
+                ps.setBoolean(5, usuario.getActivo());
                 return ps;
             }, keyHolder);
-            
-            return keyHolder.getKey().longValue();
+            Number key = keyHolder.getKey();
+            if (key == null) {
+                throw new DatabaseException("Error al guardar el usuario: No se generó un ID");
+            }
+            return key.longValue();
         } catch (Exception e) {
             throw new DatabaseException("Error al guardar el usuario: " + e.getMessage(), e);
         }
@@ -91,5 +96,4 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         }
     }
 
-   
 }

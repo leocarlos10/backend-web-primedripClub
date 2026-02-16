@@ -11,13 +11,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Pago {
+public class Carrito {
     private Long id;
-    private Long pedidoId;
-    private MetodoPago metodo;
-    private EstadoPago estado;
-    private String referencia;
-    private String mensajeError;
-    private String metadata;
-    private LocalDateTime fechaPago;
+    private Long usuarioId;
+    private String sessionId;
+    private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaActualizacion;
 }

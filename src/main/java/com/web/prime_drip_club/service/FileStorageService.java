@@ -61,7 +61,10 @@ public class FileStorageService {
     public boolean deleteImage(String imageUrl) throws IOException {
         if (imageUrl != null && imageUrl.startsWith("/uploads/images/")) {
             String fileName = imageUrl.substring("/uploads/images/".length());
-            Path filePath = Paths.get(uploadDir).resolve(fileName);
+            Path filePath = Paths.get(uploadDir).resolve(fileName).normalize();
+            if (!filePath.startsWith(Paths.get(uploadDir).toAbsolutePath())) {
+                throw new SecurityException("Intento de acceso fuera del directorio permitido");
+            }
             return Files.deleteIfExists(filePath);
         }
         return false;

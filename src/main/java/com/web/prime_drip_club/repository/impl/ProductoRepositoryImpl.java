@@ -110,8 +110,11 @@ public class ProductoRepositoryImpl implements ProductoRepository {
                 ps.setBoolean(11, producto.getIsFeatured() != null ? producto.getIsFeatured() : false);
                 return ps;
             }, keyHolder);
-
-            return keyHolder.getKey().longValue();
+            Number key = keyHolder.getKey();
+            if (key == null) {
+                throw new DatabaseException("Error al guardar producto: No se generó un ID");
+            }
+            return key.longValue();
         } catch (Exception e) {
             throw new DatabaseException("Error al guardar producto: " + e.getMessage(), e);
         }

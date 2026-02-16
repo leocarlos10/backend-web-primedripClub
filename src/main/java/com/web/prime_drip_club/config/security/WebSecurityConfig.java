@@ -37,6 +37,8 @@ public class WebSecurityConfig {
                                                 .requestMatchers("/v1/categorias/*").permitAll() // Ver categoría por ID
                                                 .requestMatchers("/v1/productos/activos").permitAll() // Listar productos activos
                                                 .requestMatchers("/v1/productos/*").permitAll() // Ver producto por ID
+                                                .requestMatchers("/v1/carrito/**").permitAll() // Permitir acceso público a carrito
+                                                .requestMatchers("/v1/detalle-carrito/**").permitAll() // Permitir acceso público a detalle carrito
                                                 .anyRequest().authenticated())
                                 .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

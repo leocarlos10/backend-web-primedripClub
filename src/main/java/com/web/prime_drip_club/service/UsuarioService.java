@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.web.prime_drip_club.config.security.UserDetailsImpl;
 import com.web.prime_drip_club.config.security.jwt.JwtUtils;
@@ -27,16 +28,17 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     public RegisterResponse register(RegisterRequest request) {
 
         if(usuarioRepository.existsByEmail(request.getEmail())){
            throw new ValidationException("El email ya esta registrado");
         }
 
-        // harcodear la contraseña por ahora va asi
         Usuario nuevoUsuario = Usuario.builder()
                 .nombre(request.getNombre())
                 .email(request.getEmail())
+                .telefono(request.getTelefono())
                 .password(passwordEncoder.encode(request.getPassword())) 
                 .activo(true)
                 .build();
@@ -52,6 +54,7 @@ public class UsuarioService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
@@ -67,6 +70,7 @@ public class UsuarioService {
          * .toList() recoge los resultados en una lista de String
          */
         return LoginResponse.builder()
+                .id(userDetails.getUsuario().getId())
                 .nombre(userDetails.getUsuario().getNombre())
                 .email(userDetails.getUsuario().getEmail())
                 .roles(userDetails.getAuthorities().stream()
