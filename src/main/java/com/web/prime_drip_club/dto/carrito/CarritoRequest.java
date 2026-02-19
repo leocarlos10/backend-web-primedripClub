@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CarritoRequest {
-    @Nullable
-    private Long carritoId;
+    
     @Nullable
     private Long usuarioId;
     @Nullable

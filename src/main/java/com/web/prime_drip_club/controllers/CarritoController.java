@@ -1,6 +1,7 @@
 package com.web.prime_drip_club.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.prime_drip_club.dto.carrito.CarritoRequest;
@@ -22,19 +23,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CarritoController {
 
     private final CarritoService carritoService;
-    
 
-    @GetMapping
-    public ResponseEntity<Response<CarritoResponse>> obtenerCarrito( @RequestBody CarritoRequest request) {
-        CarritoResponse carrito = carritoService.obtenerCarrito(request.getCarritoId(), request.getUsuarioId(), request.getSessionId());
-        Response<CarritoResponse> response = Response.<CarritoResponse>builder()
-                .responseCode(200)
-                .success(true)
-                .data(carrito)
-                .message("Carrito obtenido exitosamente")
+    
+   @GetMapping
+public ResponseEntity<Response<CarritoResponse>> obtenerCarrito(
+        @RequestParam("carritoId") Long carritoId,
+        @RequestParam(value = "usuarioId", required = false) Long usuarioId,
+        @RequestParam(value = "sessionId", required = false) String sessionId) {
+
+    if (usuarioId == null && (sessionId == null || sessionId.isBlank())) {
+        Response<CarritoResponse> error = Response.<CarritoResponse>builder()
+                .responseCode(400)
+                .success(false)
+                .data(null)
+                .message("Se requiere usuarioId o sessionId")
                 .build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.badRequest().body(error);
     }
+
+    CarritoResponse carrito = carritoService.obtenerCarrito(carritoId, usuarioId, sessionId);
+    Response<CarritoResponse> response = Response.<CarritoResponse>builder()
+            .responseCode(200)
+            .success(true)
+            .data(carrito)
+            .message("Carrito obtenido exitosamente")
+            .build();
+    return ResponseEntity.ok(response);
+}
     
 
     @PostMapping
@@ -51,13 +66,4 @@ public class CarritoController {
 
         return ResponseEntity.ok(response);
     }
-
-
-
-  
-    
-    
-
-
-    
 }

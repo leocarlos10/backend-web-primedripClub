@@ -20,5 +20,8 @@ public class DetalleCarritoResponse {
     private String productoImagenUrl;
     private Integer cantidad;
     private BigDecimal precioUnitario;
+    private String marca;
+    private Integer stock;
+    private Long categoriaId;
     private LocalDateTime fechaAgregado;
 }

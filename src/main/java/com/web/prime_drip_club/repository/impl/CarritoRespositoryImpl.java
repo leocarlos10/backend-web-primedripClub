@@ -68,26 +68,28 @@ public class CarritoRespositoryImpl implements CarritoRespository {
 
         String sql = """
                     SELECT
-                        c.id AS carrito_id,
+                        c.id,
                         c.usuario_id,
                         c.session_id,
                         c.fecha_creacion,
                         c.fecha_actualizacion,
-
                         dc.id AS detalle_id,
+                        dc.carrito_id,
                         dc.producto_id,
+                        p.nombre,
+                        p.imagen_url,
+                        p.marca,
+                        p.stock,
+                        p.categoria_id,
                         dc.cantidad,
                         dc.precio_unitario,
                         dc.fecha_agregado
-
                     FROM carrito c
-                    LEFT JOIN detalle_carrito dc
-                        ON c.id = dc.carrito_id
+                    LEFT JOIN detalle_carrito dc ON c.id = dc.carrito_id
+                    LEFT JOIN producto p ON p.id = dc.producto_id
                     WHERE c.id = ?
-                    AND (c.usuario_id = ? OR c.session_id = ?)
+                      AND (c.usuario_id = ? OR c.session_id = ?)
                 """;
-        ;
-
         try {
             CarritoResponse carrito = jdbcTemplate.query(sql, rs -> {
                 CarritoResponse response = null;
@@ -95,7 +97,8 @@ public class CarritoRespositoryImpl implements CarritoRespository {
                 while (rs.next()) {
                     if (response == null) {
                         response = new CarritoResponse();
-                        response.setId(rs.getLong("carrito_id"));
+                        response.setId(rs.getLong("id"));
+                        response.setCarritoId(rs.getLong("carrito_id"));
                         response.setUsuarioId(rs.getLong("usuario_id"));
                         response.setSessionId(rs.getString("session_id"));
                         response.setFechaCreacion(rs.getTimestamp("fecha_creacion").toLocalDateTime());
@@ -108,9 +111,15 @@ public class CarritoRespositoryImpl implements CarritoRespository {
                     if (!rs.wasNull()) {
                         DetalleCarritoResponse detalle = new DetalleCarritoResponse();
                         detalle.setId(detalleId);
+                        detalle.setCarritoId(rs.getLong("carrito_id"));
                         detalle.setProductoId(rs.getLong("producto_id"));
+                        detalle.setProductoNombre(rs.getString("nombre"));
+                        detalle.setProductoImagenUrl(rs.getString("imagen_url"));
                         detalle.setCantidad(rs.getInt("cantidad"));
                         detalle.setPrecioUnitario(rs.getBigDecimal("precio_unitario"));
+                        detalle.setMarca(rs.getString("marca"));
+                        detalle.setStock(rs.getInt("stock"));
+                        detalle.setCategoriaId(rs.getLong("categoria_id"));
                         detalle.setFechaAgregado(rs.getTimestamp("fecha_agregado").toLocalDateTime());
                         response.getItems().add(detalle);
                     }
