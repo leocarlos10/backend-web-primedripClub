@@ -404,13 +404,6 @@ FROM usuario u, rol r
 WHERE u.email = 'email del admin creado' AND r.nombre = 'ADMIN';
 ```
 
-## Referencias y recursos
-
-- **Documentación oficial**: https://flywaydb.org/documentation/
-- **Configuración Spring Boot**: https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data-migration.spring.flyway
-- **GitHub Flyway**: https://github.com/flyway/flyway
-- **Comandos CLI**: https://flywaydb.org/documentation/usage/commandline/
-
 ## Notas finales
 
 - Flyway es ideal para equipos que necesitan control de versiones de base de datos

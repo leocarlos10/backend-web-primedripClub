@@ -677,27 +677,8 @@ SET GLOBAL long_query_time = 2; -- Queries que tomen más de 2 segundos
 - [ ] Datos de prueba insertados
 - [ ] Validación exitosa
 
-### Aplicación:
-
-- [ ] Entidades JPA actualizadas (Usuario, DireccionUsuario, Pedido, Pago)
-- [ ] Entidades nuevas creadas (Carrito, DetalleCarrito)
-- [ ] Repositorios creados (Carrito, DetalleCarrito, DireccionUsuario)
-- [ ] Servicios implementados (CarritoService, DireccionService)
-- [ ] Controladores creados (CarritoController, DireccionController)
-- [ ] DTOs definidos (DireccionDTO, PedidoConDireccionDTO)
-- [ ] Validaciones agregadas
-- [ ] Tests unitarios
-- [ ] Tests de integración
-
 ---
 
-## 📚 Recursos Adicionales
-
-- [Documentación Spring Data JPA](https://spring.io/projects/spring-data-jpa)
-- [MySQL Performance Tuning](https://dev.mysql.com/doc/refman/8.0/en/optimization.html)
-- [Patrones de diseño para e-commerce](https://martinfowler.com/eaaCatalog/)
-
----
 
 ## 📞 Soporte
 
@@ -712,4 +693,4 @@ Si encuentras problemas durante la migración:
 
 **Última actualización:** 9 de febrero de 2026  
 **Versión:** 1.0  
-**Autor:** Sistema PrimeDripClub - Documentación de Migración
+**Autor:** Equipo de desarrollo de NEOCODE
