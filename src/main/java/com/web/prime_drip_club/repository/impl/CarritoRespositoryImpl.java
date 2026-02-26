@@ -63,6 +63,40 @@ public class CarritoRespositoryImpl implements CarritoRespository {
         }
     }
 
+    /**
+     * Actuliza un carrito existente asignandole un usuarioId
+     * @param carritoId El ID del carrito a actualizar
+     * @param usuarioId El ID del usuario a asignar al carrito
+     * @return true si se actualizó correctamente, false si no se encontró el carrito o no se pudo actualizar
+     */
+    @Override
+    public Boolean actualizarCarrito(Long carritoId, Long usuarioId) {
+        
+        String sql = "UPDATE carrito SET usuario_id = ? , session_id = NULL, fecha_actualizacion = NOW() WHERE id = ? ";
+        try {
+            int rows = jdbcTemplate.update(sql, usuarioId, carritoId);
+            return rows > 0;
+        } catch (Exception e) {
+            throw new DatabaseException("Error al actualizar el carrito: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Optional<Long> obtenerCarritoId(Long usuarioId) {
+        String sql = """
+                    SELECT
+                        c.id
+                    FROM carrito c
+                    WHERE c.usuario_id = ?
+                """;
+        try {
+            Long carritoId = jdbcTemplate.queryForObject(sql, Long.class, usuarioId);
+            return Optional.of(carritoId);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     @Override
     public Optional<CarritoResponse> obtenerCarrito(Long carritoId, Long usuarioId, String sessionId) {
 

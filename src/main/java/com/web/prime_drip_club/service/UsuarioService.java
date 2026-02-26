@@ -27,6 +27,7 @@ public class UsuarioService {
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final CarritoService carritoService;
 
     @Transactional
     public RegisterResponse register(RegisterRequest request) {
@@ -56,12 +57,15 @@ public class UsuarioService {
 
     @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
+
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         String token = jwtUtils.getToken(userDetails);
 
+        // buscar un carrito que este asociado al usuario que se esta logueando
+        Long carritoId = carritoService.obtenerCarritoId(userDetails.getUsuario().getId());
         /*
          * getAuthorities devuelve una lista de GrantedAuthority
          * [SimpleGrantedAuthority("ROLE_USER"), SimpleGrantedAuthority("ROLE_ADMIN")],
@@ -71,6 +75,7 @@ public class UsuarioService {
          */
         return LoginResponse.builder()
                 .id(userDetails.getUsuario().getId())
+                .carritoId(carritoId)
                 .nombre(userDetails.getUsuario().getNombre())
                 .email(userDetails.getUsuario().getEmail())
                 .roles(userDetails.getAuthorities().stream()

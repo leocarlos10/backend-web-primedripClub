@@ -7,6 +7,8 @@ import com.web.prime_drip_club.dto.carrito.CarritoResponse;
 
 public interface CarritoRespository {
     Long guardarCarrito(CarritoRequest carrito);
+    Boolean actualizarCarrito(Long carritoId, Long usuarioId);
+    Optional<Long> obtenerCarritoId(Long usuarioId);
     Optional<CarritoResponse> obtenerCarrito(Long carritoId, Long usuarioId, String sessionId);
 
 }
