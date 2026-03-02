@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DireccionRequest {
+    
+    @NotBlank(message = "El usuarioId es obligatorio")
+    private Long usuarioId;
     @NotBlank(message = "El alias es obligatorio")
     @Size(max = 50, message = "El alias no puede superar 50 caracteres")
     private String alias;

@@ -1,0 +1,4 @@
+ALTER TABLE pedido
+MODIFY COLUMN email_contacto VARCHAR(150) NULL ,
+MODIFY COLUMN nombre_contacto VARCHAR(150) NULL ,
+MODIFY COLUMN direccion_envio VARCHAR(255) NULL ;

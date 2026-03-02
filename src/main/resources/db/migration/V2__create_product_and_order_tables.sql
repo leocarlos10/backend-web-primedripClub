@@ -29,6 +29,7 @@ CREATE TABLE pedido (
         FOREIGN KEY (usuario_id) REFERENCES usuario (id)
 );
 
+
 -- Tabla Pago
 CREATE TABLE pago (
     id              BIGINT AUTO_INCREMENT PRIMARY KEY,
