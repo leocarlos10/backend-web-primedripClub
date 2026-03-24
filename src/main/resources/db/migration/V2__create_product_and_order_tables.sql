@@ -18,10 +18,6 @@ CREATE TABLE producto (
 CREATE TABLE pedido (
     id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
     usuario_id          BIGINT,               -- NULLABLE: cliente invitado
-    email_contacto      VARCHAR(150) NOT NULL,
-    nombre_contacto     VARCHAR(150) NOT NULL,
-    telefono            VARCHAR(50),
-    direccion_envio     VARCHAR(255) NOT NULL,
     total               DECIMAL(12,2) NOT NULL,
     estado              VARCHAR(50) NOT NULL,
     fecha_creacion      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
