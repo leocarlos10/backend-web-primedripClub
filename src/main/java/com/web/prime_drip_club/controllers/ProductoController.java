@@ -24,6 +24,15 @@ public class ProductoController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response<List<ProductoResponse>>> obtenerTodos() {
         List<ProductoResponse> productos = productoService.obtenerTodos();
+        if (productos.isEmpty()) {
+            Response<List<ProductoResponse>> response = Response.<List<ProductoResponse>>builder()
+                    .responseCode(200)
+                    .success(true)
+                    .message("No hay productos registrados")
+                    .data(productos)
+                    .build();
+            return ResponseEntity.ok(response);
+        }
         Response<List<ProductoResponse>> response = Response.<List<ProductoResponse>>builder()
                 .responseCode(200)
                 .success(true)
@@ -36,6 +45,15 @@ public class ProductoController {
     @GetMapping("/activos")
     public ResponseEntity<Response<List<ProductoResponse>>> obtenerActivos() {
         List<ProductoResponse> productos = productoService.obtenerActivos();
+        if (productos.isEmpty()) {
+            Response<List<ProductoResponse>> response = Response.<List<ProductoResponse>>builder()
+                    .responseCode(200)
+                    .success(true)
+                    .message("No hay productos disponibles")
+                    .data(productos)
+                    .build();
+            return ResponseEntity.ok(response);
+        }
         Response<List<ProductoResponse>> response = Response.<List<ProductoResponse>>builder()
                 .responseCode(200)
                 .success(true)
