@@ -15,14 +15,13 @@ import com.web.prime_drip_club.dto.carrito.DetalleCarritoResponse;
 import com.web.prime_drip_club.exception.DatabaseException;
 import com.web.prime_drip_club.repository.CarritoRespository;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class CarritoRespositoryImpl implements CarritoRespository {
 
     private final JdbcTemplate jdbcTemplate;
-
-    public CarritoRespositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public Long guardarCarrito(CarritoRequest carrito) {

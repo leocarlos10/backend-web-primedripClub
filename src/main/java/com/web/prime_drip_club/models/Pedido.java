@@ -15,10 +15,6 @@ import java.time.LocalDateTime;
 public class Pedido {
     private Long id;
     private Long usuarioId;
-    private String emailContacto;
-    private String nombreContacto;
-    private String telefono;
-    private String direccionEnvio;
     private Long direccionId;
     private String direccionEnvioSnapshot;
     private BigDecimal total;
